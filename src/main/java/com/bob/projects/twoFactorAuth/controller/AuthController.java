@@ -23,7 +23,7 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticateUser(@Valid @RequestBody LoginInput loginInput) {
         String token = userService.loginUser(loginInput.getUsername(), loginInput.getPassword());
         return ResponseEntity.ok(new AuthenticationResponse(token, StringUtils.isEmpty(token)));

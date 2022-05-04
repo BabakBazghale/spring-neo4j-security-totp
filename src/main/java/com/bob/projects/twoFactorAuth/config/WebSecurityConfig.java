@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auth/user-creation","/auth/signin","/auth/verify").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth/user-creation","/auth/login","/auth/verify").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(new JwtAuthenticationFilter(jwtConfig,jwtUtil,userService), UsernamePasswordAuthenticationFilter.class);
     }
