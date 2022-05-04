@@ -23,6 +23,12 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @PostMapping(value = "/user-creation", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> createUser(@Valid @RequestBody UserInput userInput) {
+        String qrCode = userService.userCreation(userInput);
+        return ResponseEntity.ok(qrCode);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticateUser(@Valid @RequestBody LoginInput loginInput) {
         String token = userService.loginUser(loginInput.getUsername(), loginInput.getPassword());
@@ -32,12 +38,6 @@ public class AuthController {
     @PostMapping("/verify")
     public ResponseEntity<AuthenticationResponse> verifyCode(@Valid @RequestBody CodeVerifyInput codeVerifyInput) {
         String token = userService.verify(codeVerifyInput.getUsername(), codeVerifyInput.getCode());
-        return ResponseEntity.ok(new AuthenticationResponse(token, StringUtils.isEmpty(token)));
-    }
-
-    @PostMapping(value = "/user-creation", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createUser(@Valid @RequestBody UserInput userInput) {
-        String qrCode = userService.userCreation(userInput);
-        return ResponseEntity.ok(qrCode);
+        return ResponseEntity.ok(new AuthenticationResponse(token, true));
     }
 }
