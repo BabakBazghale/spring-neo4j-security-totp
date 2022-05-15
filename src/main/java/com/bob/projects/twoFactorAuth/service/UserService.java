@@ -71,7 +71,7 @@ public class UserService {
         }
         user.setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role role=new Role("USER");
+        Role role = new Role("USER");
         roleRepository.save(role);
         user.setRoles(new HashSet<>() {{
             add(role);
@@ -80,8 +80,8 @@ public class UserService {
             user.setSecret(totpManager.generateSecret());
         }
         userRepository.save(user);
-       String qrCode= totpManager.getUriForImage(user.getSecret());
-       return qrCode;
+        String qrCode = totpManager.getUriForImage(user.getSecret());
+        return qrCode;
     }
 
 
@@ -93,7 +93,7 @@ public class UserService {
                 .password(signUpRequest.getPassword())
                 .isTwoFactorEnabled(signUpRequest.getIsTwoFactorEnabled())
                 .build();
-        String qrCode= userRegistration(user);
+        String qrCode = userRegistration(user);
         return qrCode;
     }
 
